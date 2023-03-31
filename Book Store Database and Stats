@@ -1,0 +1,25 @@
+-- Create a store database
+
+CREATE TABLE bounty_books (id INTEGER PRIMARY KEY, name TEXT, genre TEXT, price INTEGER, quantity INTEGER);
+
+INSERT INTO bounty_books VALUES (1, "ROTI", "SciFi", 20, 100);
+INSERT INTO bounty_books VALUES (2, "Path of Temptation", "Romance", 15, 35);
+INSERT INTO bounty_books VALUES (3, "Wolf of Oberhame", "Romance", 15, 40);
+INSERT INTO bounty_books VALUES (4, "Anita Blake", "Romance", 5, 2);
+INSERT INTO bounty_books VALUES (5, "Lucy", "Adventure", 20, 15);
+INSERT INTO bounty_books VALUES (6, "Boxcar Children", "Children", 5, 5);
+INSERT INTO bounty_books VALUES (7, "Brandon Sanderson", "SciFi", 30, 25);
+INSERT INTO bounty_books VALUES (8, "Auryn", "Adventure", 20, 40);
+INSERT INTO bounty_books VALUES (9, "Renae", "Romance", 10, 15);
+INSERT INTO bounty_books VALUES (10, "Ceanna", "Adventure", 25, 6);
+INSERT INTO bounty_books VALUES (11, "Erin", "SciFi", 40, 20);
+INSERT INTO bounty_books VALUES (12, "Bea", "Romance", 30, 12);
+INSERT INTO bounty_books VALUES (13, "Mom", "SciFi", 2, 10);
+INSERT INTO bounty_books VALUES (14, "Reggie", "Adventure", 9, 13);
+INSERT INTO bounty_books VALUES (15, "Ryry", "Romance", 40, 20);
+
+--display the database ordered by price.
+SELECT * FROM bounty_books ORDER BY price;
+
+-- what is the total number of books on hand by genre?
+SELECT genre, SUM(quantity) FROM bounty_books GROUP BY genre
