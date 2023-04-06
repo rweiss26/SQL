@@ -1,0 +1,50 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE famous_people (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    age INTEGER);
+    
+INSERT INTO famous_people (fullname, age) VALUES ("Billie Eilish", 21);
+INSERT INTO famous_people (fullname, age) VALUES ("Ariana Grande", 29);
+INSERT INTO famous_people (fullname, age) VALUES ("Miley Cyrus", 30);
+INSERT INTO famous_people (fullname, age) VALUES ("Taylor Swift", 33);
+INSERT INTO famous_people (fullname, age) VALUES ("Selena Gomez", 30);
+
+
+CREATE table songs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    name TEXT);
+    
+INSERT INTO songs (person_id, name) VALUES (1, "bad guy");
+INSERT INTO songs (person_id, name) VALUES (1, "happier than ever");
+INSERT INTO songs (person_id, name) VALUES (2, "Thank U, Next");
+INSERT INTO songs (person_id, name) VALUES (2, "Boyfriend");
+INSERT INTO songs (person_id, name) VALUES (3, "The Climb");
+INSERT INTO songs (person_id, name) VALUES (3, "Malibu");
+INSERT INTO songs (person_id, name) VALUES (4, "Love Story");
+INSERT INTO songs (person_id, name) VALUES (4, "Anti-Hero");
+INSERT INTO songs (person_id, name) VALUES (5, "Lose you to love me");
+INSERT INTO songs (person_id, name) VALUES (5, "Same Old love");
+
+CREATE table home (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    state TEXT);
+
+INSERT INTO home (person_id, state) VALUES (1, "CA");
+INSERT INTO home (person_id, state) VALUES (2, "CA");
+INSERT INTO home (person_id, state) VALUES (3, "TN");
+INSERT INTO home (person_id, state) VALUES (4, "TN");
+INSERT INTO home (person_id, state) VALUES (5, "TX");
+    
+SELECT f.fullname, s.name AS Song_Name
+    FROM famous_people f
+    JOIN songs s
+    ON f.id=s.person_id;
+    
+SELECT f.fullname, h.state
+    FROM famous_people f
+    LEFT OUTER JOIN home h
+    ON f.id=h.person_id;
