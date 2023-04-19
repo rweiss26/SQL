@@ -1,0 +1,63 @@
+-- For this project, I downloaded Spotify data from Kaggle.
+-- Then I created a table to insert Spotify data into.
+-- Finally, I performed analytics on the data using SQL. 
+
+-- Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+-- Then I inserted the Spotify Data .csv into the table.
+
+-- Next, I explored the data using the following SQL.
+
+-- First I determined which artists had the most songs in the top 50 
+
+SELECT artist_name, COUNT(artist_name) AS num_songs
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING num_songs > 3
+
+-- Next, I determined how many songs were longer than 2 mins, and of those which ones had a popularity score greater than 90
+
+SELECT track_name, (duration_ms/1000) AS seconds, popularity
+FROM BIT_DB.Spotifydata
+WHERE seconds >= 120
+    AND popularity > 90
+ORDER BY popularity DESC
+
+--Then, I found what the average danceability of songs with a tempo under 100 was
+
+SELECT AVG(danceability) AS avg_danceability_under_100
+FROM BIT_DB.Spotifydata
+HAVING tempo <100
+
+--I also determined how many artists had more than 1 song in the top 50, and what was the average popularity of those artist
+
+SELECT AVG(popularity, COUNT(artist_name))
+FROM BIT_DB.Spotifydata
+HAVING artist_name>1
+
+
+--Finally, I asked how many of each type of key was used in the top 50 songs,.
+
+SELECT song_key, COUNT(song_key) AS num_used
+FROM BIT_DB.Spotifydata
+GROUP BY song_key
