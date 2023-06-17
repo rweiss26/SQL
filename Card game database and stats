@@ -1,10 +1,6 @@
-/*  Friendly Card Game Results:
-During this past winter, a few friends got together every Wednesday night for a friendly game of cards.  
-On some nights they'd play two games, but never the same game twice on the same night.  The usual players were Spunky Sam, Marcimus, 
-Winston, and Hopper.  Sometimes, one of the friends couldn't make it, so there were only three players.  
-But sometimes they'd call another friend to fill-in.  In every game they played, the one with the hightest score was declared the winner.  
-These are their results:
-Created by: https://www.khanacademy.org/profile/brianduckworth
+/*  Friendly Card Game:
+In this SQL, I'm querying a database to quantify statistics about game player data and statistics.
+Data by: https://www.khanacademy.org/profile/brianduckworth
 */
 
 CREATE TABLE card_games(id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -71,14 +67,20 @@ INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03
 INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/25','Rummy','Winston',397);
 INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03/25','Rummy','Hopper',443);
    
-   
+/* First I found the average score, maximum score and minimum score of all games played.*/
+
 SELECT AVG(score) AS avg_score, MAX(score) AS max_score, MIN(score) AS min_score
 FROM card_games;
+
+/* Then I found out which playes had a total score the was greater than 2,000 points*/
 
 SELECT player_name, SUM(score) AS total_score 
 FROM card_games
 GROUP BY player_name
 HAVING total_score >2000;
+
+/* I then wanted to count the number of times that when a score was greater than 500, 400, 300, and 200, and provide the labels of Ace, King, Queen, 
+and Jack respectfully.*/
 
 SELECT COUNT(*),
     CASE
@@ -91,11 +93,19 @@ SELECT COUNT(*),
 FROM card_games
 GROUP BY title;
 
-SELECT game_name 
-FROM card_games
-WHERE score > 50 AND player_name = 'Hopper';
+/* Next I queried which games the player Hopper scored more than 50 points, and how many times for each if those games.*/
 
-SELECT game_name
+SELECT game_name, COUNT(game_name)
 FROM card_games
-WHERE score > 200 OR player_name = 'Hopper';
+WHERE score > 50 AND player_name = 'Hopper'
+GROUP BY game_name;
+
+/*Finally, I counted then number of times Hopper scored over 200 points for each game type.*/
+
+SELECT game_name, COUNT (game_name)
+FROM card_games
+WHERE score > 200 OR player_name = 'Hopper'
+GROUP BY game_name;
+
+
 
