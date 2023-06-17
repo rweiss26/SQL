@@ -1,4 +1,5 @@
-/* Create table about the people and what they do here */
+/* Here I created a table of artists, a table of their songs, then a table from their home state. From there I joined the tables to link the
+artist with their songs and hometown.*/
 
 CREATE TABLE famous_people (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,12 +39,16 @@ INSERT INTO home (person_id, state) VALUES (2, "CA");
 INSERT INTO home (person_id, state) VALUES (3, "TN");
 INSERT INTO home (person_id, state) VALUES (4, "TN");
 INSERT INTO home (person_id, state) VALUES (5, "TX");
-    
+
+/* Here I joined the artist name and their songs*/
+
 SELECT f.fullname, s.name AS Song_Name
     FROM famous_people f
     JOIN songs s
     ON f.id=s.person_id;
-    
+
+/* Then I joined the artist name with their home state*/
+
 SELECT f.fullname, h.state
     FROM famous_people f
     LEFT OUTER JOIN home h
