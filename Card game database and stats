@@ -1,5 +1,5 @@
 /*  Friendly Card Game:
-In this SQL, I'm querying a database to quantify statistics about game player data to determine average score of total games and categorize 
+In this SQL, I'm querying a database to quantify statistics about game player data to determine the average score of all games played and categorize 
 players based on their scores.
 Data by: https://www.khanacademy.org/profile/brianduckworth
 */
