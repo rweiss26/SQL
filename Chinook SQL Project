@@ -1,4 +1,5 @@
--- Below are my answers to the final SQL project from the BreakIntoTech Program
+-- In this project I worked with a dataset called chinook, which represents a digital media store and includes tables for artists, albums, media tracks, invoices, and customers. 
+
 
 #1 Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
 
