@@ -1,0 +1,35 @@
+WORK IN PROGRESS
+
+/* Here I worked with a the data set "Pod Daily Calls" which explored orthopedic daily call volume sorted by specialty service line (Pod). Using this data, I determined average hold
+times, abandonment call rate, and call volume by comparing findings from January 2022 through September 2023. *\
+
+/* Average hold time by day per POD. *\
+
+SELECT avg_hold_time, date, service_line
+FROM BIT_DB.poddailycalls
+WHERE service_line IN ("Sport_Med", "Upper_Ext")
+GROUP BY date, service_line
+
+
+SELECT service_line, date,
+AVG(avg_hold_time) OVER (PARTITION BY date) AS "Avg"
+FROM BIT_DB.poddailycalls
+WHERE service_line IN ("Sport_Med", "Upper_Ext")
+GROUP BY date, service_line
+
+/* Average hold time by month per POD. *\
+
+/* Percentage of abondoned calls by day per POD. *\
+
+/* Percentage of abondoned calls by month per POD. *\
+
+/* Total Percentage of abondoned calls by day per POD excluding 6400 service line. *\
+
+/* Total Percentage of abondoned calls by month per POD excluding 6400 service line. *\
+
+/* Average call volume by day per POD. *\
+
+/* Average call volume by month per POD. *\
+
+
+
