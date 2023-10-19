@@ -1,0 +1,160 @@
+WORK IN PROGRESS
+
+/* Here I worked with a the data set "Pod Daily Calls" which explored orthopedic daily call volume sorted by specialty service line (Pod). Using this data, I determined average hold
+times, abandonment call rate, and call volume by comparing findings from January 2022 through September 2023. *\
+
+/* Average hold time, avg % within service line, total incoming calls, total taken calls, and total abonded calls by day per POD. *\
+  
+  -- UE_Sports
+
+SELECT
+    date,
+    'UE_Sports' AS service_line,
+    SUM(Incoming_Calls) AS Total_Incoming_Calls,
+    SUM(Calls_Taken) AS Total_Calls_Taken,
+    time(                  -- This line calculates the average hold time in HH:MM:SS format
+        AVG(
+            CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
+            CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
+            CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
+        ), 'unixepoch'
+    ) AS Avg_Hold_Time_HH_MM_SS,
+    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    SUM(Aban_Calls) AS Total_Aban_Calls
+FROM
+    BIT_DB.poddailycalls
+WHERE
+    service_line IN ("Sports_Med", "Upper_Ext")
+GROUP BY
+    date;
+
+  -- TJ_Onc
+
+SELECT
+    date,
+    'TJ_Onc' AS service_line,
+    SUM(Incoming_Calls) AS Total_Incoming_Calls,
+    SUM(Calls_Taken) AS Total_Calls_Taken,
+    time(                  -- This line calculates the average hold time in HH:MM:SS format
+        AVG(
+            CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
+            CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
+            CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
+        ), 'unixepoch'
+    ) AS Avg_Hold_Time_HH_MM_SS,
+    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    SUM(Aban_Calls) AS Total_Aban_Calls
+FROM
+    BIT_DB.poddailycalls
+WHERE
+    service_line IN ("Total_Joint", "Oncology")
+GROUP BY
+    date;
+
+  -- FA_Trauma
+
+SELECT
+    date,
+    'TJ_Onc' AS service_line,
+    SUM(Incoming_Calls) AS Total_Incoming_Calls,
+    SUM(Calls_Taken) AS Total_Calls_Taken,
+    time(                  -- This line calculates the average hold time in HH:MM:SS format
+        AVG(
+            CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
+            CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
+            CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
+        ), 'unixepoch'
+    ) AS Avg_Hold_Time_HH_MM_SS,
+    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    SUM(Aban_Calls) AS Total_Aban_Calls
+FROM
+    BIT_DB.poddailycalls
+WHERE
+    service_line IN ("Total_Joint", "Oncology")
+GROUP BY
+    date;
+
+/* Average hold time, avg % within service line, total incoming calls, total taken calls, and total abonded calls by month per POD. *\
+ 
+  -- UE_Sports
+
+SELECT
+    strftime('%Y-%m', date) AS month,  -- Group by year and month
+    'UE_Sports' AS service_line,
+    SUM(Incoming_Calls) AS Total_Incoming_Calls,
+    SUM(Calls_Taken) AS Total_Calls_Taken,
+    time(                  -- This line calculates the average hold time in HH:MM:SS format
+        AVG(
+            CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
+            CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
+            CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
+        ), 'unixepoch'
+    ) AS Avg_Hold_Time_HH_MM_SS,
+    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    SUM(Aban_Calls) AS Total_Aban_Calls
+FROM
+    BIT_DB.poddailycalls
+WHERE
+    service_line IN ("Sports_Med", "Upper_Ext")
+GROUP BY
+    month;  -- Group by year and month
+
+  -- TJ_Onc
+
+SELECT
+    strftime('%Y-%m', date) AS month,  -- Group by year and month
+    'TJ_Onc' AS service_line,
+    SUM(Incoming_Calls) AS Total_Incoming_Calls,
+    SUM(Calls_Taken) AS Total_Calls_Taken,
+    time(                  -- This line calculates the average hold time in HH:MM:SS format
+        AVG(
+            CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
+            CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
+            CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
+        ), 'unixepoch'
+    ) AS Avg_Hold_Time_HH_MM_SS,
+    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    SUM(Aban_Calls) AS Total_Aban_Calls
+FROM
+    BIT_DB.poddailycalls
+WHERE
+    service_line IN ("Total_Joint", "Oncology")
+GROUP BY
+    month;  -- Group by year and month
+
+  -- FA_Trauma
+
+SELECT
+    strftime('%Y-%m', date) AS month,  -- Group by year and month
+    'FA_Trauma' AS service_line,
+    SUM(Incoming_Calls) AS Total_Incoming_Calls,
+    SUM(Calls_Taken) AS Total_Calls_Taken,
+    time(                  -- This line calculates the average hold time in HH:MM:SS format
+        AVG(
+            CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
+            CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
+            CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
+        ), 'unixepoch'
+    ) AS Avg_Hold_Time_HH_MM_SS,
+    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    SUM(Aban_Calls) AS Total_Aban_Calls
+FROM
+    BIT_DB.poddailycalls
+WHERE
+    service_line IN ("Foot_Ankle", "Trauma")
+GROUP BY
+    month;  -- Group by year and month
+
+/* Total Percentage of abondoned calls by day per POD excluding 6400 service line. *\
+  -- UE_Sports
+  -- TJ_Onc
+  -- FA_Trauma
+/* Total Percentage of abondoned calls by month per POD excluding 6400 service line. *\
+  -- UE_Sports
+  -- TJ_Onc
+  -- FA_Trauma
+
+/* Average incoming calls, calls taken, within services level, hold time and abandoned calls by month per POD. *\
+  -- UE_Sports
+  -- TJ_Onc
+  -- FA_Trauma
