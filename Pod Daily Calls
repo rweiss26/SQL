@@ -11,20 +11,20 @@ SELECT
     date,
     'UE_Sports' AS service_line,
     SUM(Incoming_Calls) AS Total_Incoming_Calls,
-    SUM(Calls_Taken) AS Total_Calls_Taken,
-    time(                  -- This line calculates the average hold time in HH:MM:SS format
+    SUM(Calls_Taken) AS Calls_Taken,
+    time(                  
         AVG(
             CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
             CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
             CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
         ), 'unixepoch'
-    ) AS Avg_Hold_Time_HH_MM_SS,
-    AVG(In_Service_Level) AS Avg_In_Service_Level,
-    SUM(Aban_Calls) AS Total_Aban_Calls
+    ) AS Avg_Hold_Time,
+    ROUND(AVG(In_Service_Level)) AS In_Service_Level,
+    SUM(Aban_Calls) AS Aban_Calls
 FROM
-    BIT_DB.poddailycalls
+    BIT_DB.poddata
 WHERE
-    service_line IN ("Sports_Med", "Upper_Ext")
+    service_line IN ("Sport_Med", "Upper_Ext")
 GROUP BY
     date;
 
@@ -33,19 +33,19 @@ GROUP BY
 SELECT
     date,
     'TJ_Onc' AS service_line,
-    SUM(Incoming_Calls) AS Total_Incoming_Calls,
-    SUM(Calls_Taken) AS Total_Calls_Taken,
+    SUM(Incoming_Calls) AS Incoming_Calls,
+    SUM(Calls_Taken) AS Calls_Taken,
     time(                  -- This line calculates the average hold time in HH:MM:SS format
         AVG(
             CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
             CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
             CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
         ), 'unixepoch'
-    ) AS Avg_Hold_Time_HH_MM_SS,
-    AVG(In_Service_Level) AS Avg_In_Service_Level,
-    SUM(Aban_Calls) AS Total_Aban_Calls
+    ) AS Avg_Hold_Time,
+    ROUND(AVG(In_Service_Level)) AS In_Service_Level,
+    SUM(Aban_Calls) AS Aban_Calls
 FROM
-    BIT_DB.poddailycalls
+    BIT_DB.poddata
 WHERE
     service_line IN ("Total_Joint", "Oncology")
 GROUP BY
@@ -55,24 +55,24 @@ GROUP BY
 
 SELECT
     date,
-    'TJ_Onc' AS service_line,
-    SUM(Incoming_Calls) AS Total_Incoming_Calls,
-    SUM(Calls_Taken) AS Total_Calls_Taken,
+    'Trauma_FA' AS service_line,
+    SUM(Incoming_Calls) AS Incoming_Calls,
+    SUM(Calls_Taken) AS Calls_Taken,
     time(                  -- This line calculates the average hold time in HH:MM:SS format
         AVG(
             CAST(SUBSTR(Avg_Hold_Time, 1, 2) AS INTEGER) * 3600 +
             CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
             CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
         ), 'unixepoch'
-    ) AS Avg_Hold_Time_HH_MM_SS,
-    AVG(In_Service_Level) AS Avg_In_Service_Level,
-    SUM(Aban_Calls) AS Total_Aban_Calls
+    ) AS Avg_Hold_Time,
+    ROUND(AVG(In_Service_Level)) AS In_Service_Level,
+    SUM(Aban_Calls) AS Aban_Calls
 FROM
-    BIT_DB.poddailycalls
+    BIT_DB.poddata
 WHERE
-    service_line IN ("Total_Joint", "Oncology")
+    service_line IN ("Foot_Ankle", "Trauma")
 GROUP BY
-    date;
+    date
 
 /* Average hold time, avg % within service line, total incoming calls, total taken calls, and total abonded calls by month per POD. *\
  
@@ -90,12 +90,12 @@ SELECT
             CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
         ), 'unixepoch'
     ) AS Avg_Hold_Time_HH_MM_SS,
-    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    ROUND(AVG(In_Service_Level)) AS In_Service_Level,
     SUM(Aban_Calls) AS Total_Aban_Calls
 FROM
     BIT_DB.poddailycalls
 WHERE
-    service_line IN ("Sports_Med", "Upper_Ext")
+    service_line IN ("Sport_Med", "Upper_Ext")
 GROUP BY
     month;  -- Group by year and month
 
@@ -112,8 +112,8 @@ SELECT
             CAST(SUBSTR(Avg_Hold_Time, 4, 2) AS INTEGER) * 60 +
             CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
         ), 'unixepoch'
-    ) AS Avg_Hold_Time_HH_MM_SS,
-    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    ) AS Avg_Hold_Time,
+    ROUND(AVG(In_Service_Level)) AS In_Service_Level,
     SUM(Aban_Calls) AS Total_Aban_Calls
 FROM
     BIT_DB.poddailycalls
@@ -136,7 +136,7 @@ SELECT
             CAST(SUBSTR(Avg_Hold_Time, 7, 2) AS INTEGER)
         ), 'unixepoch'
     ) AS Avg_Hold_Time_HH_MM_SS,
-    AVG(In_Service_Level) AS Avg_In_Service_Level,
+    ROUND(AVG(In_Service_Level)) AS In_Service_Level,
     SUM(Aban_Calls) AS Total_Aban_Calls
 FROM
     BIT_DB.poddailycalls
